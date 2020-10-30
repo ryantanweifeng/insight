@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+
+            <template>
+                <v-parallex>
+                    <v-img src="./images/business.jpg" max-width="100%" max-height="100%">
+                        <v-overlay absolute color="#036358">
+                            <div style="margin-bottom:50% ;">
+                                <h1 style=" text-align:center;font-family: Tahoma; font-size:50pt;">Do more
+                                </h1>
+                                <h1 style=" font-family: Tahoma; font-size:50pt;">with your data</h1>
+                                <h2 style=" font-family: Tahoma; font-size:20pt; margin-bottom: 10%;">Get a better insight
+                                    of
+                                    your
+                                    business</h2>
+                                
+                                <v-row justify="center">
+                                    <v-dialog v-model="dialog" persistent max-width="290">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn color="blue-grey" dark v-bind="attrs" v-on="on" x-large>
+                                                Sign UP
+                                            </v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title class="headline">
+                                                Use Google's location service?
+                                            </v-card-title>
+                                            <v-card-text>Let Google help apps determine location. This means sending
+                                                anonymous
+                                                location data to Google, even when no apps are running.</v-card-text>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="green darken-1" text @click="dialog = false">
+                                                    Disagree
+                                                </v-btn>
+                                                <v-btn color="green darken-1" text @click="dialog = false">
+                                                    Agree
+                                                </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-row>
+                            </div>
+
+                        </v-overlay>
+
+                </v-parallex>
+
+            </template>
+            <template>
+
+            </template>
+
+            </v-parallax>
+            <template>
+
+            </template>
+        </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data: {
+                dialog: false,
+            }
+        })
+    </script>
+</body>
+
+</html>
