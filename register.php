@@ -41,7 +41,7 @@
 
 
 
-                <v-btn color="error" class="mr-4" @click="reset">
+                <v-btn color="error" class="mr-4" @click="reset" href="index.html">
                   Cancel
                 </v-btn>
 
