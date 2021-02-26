@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$password = "r&a";
+$password = "";
 $dbname = "insight";
 $id = '';
 

@@ -23,7 +23,24 @@ export default new Router({
         path: '/DashboardPage',
         name: 'DashboardPage',
         component: () =>
-        import('./DashboardPage.vue')
+        import('./DashboardPage.vue'),
+        props: true,
+      },
+      {
+        path: '/Graph',
+        name: 'Graph',
+        component: () =>
+        import('./components/Graphs.vue')
+      },
+      {
+        path: '/InputData',
+        name: 'InputData',
+        component: () =>
+        import('./InputData.vue'),
+        props: true
       }
+      
+
+      
   ]
 })

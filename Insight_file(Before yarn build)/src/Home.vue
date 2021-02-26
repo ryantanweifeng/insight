@@ -29,6 +29,7 @@
                   </v-btn>
                 </div>
               </template>
+             
 
               <!--Sign in button with dialog-->
               <template>
@@ -130,6 +131,7 @@ export default {
     passwordRules: [(v) => !!v || "Password is required"],
   }),
   methods: {
+    
     verifyUser: function () {
       axios
         .get("api/users.php")
@@ -140,7 +142,7 @@ export default {
               this.username === element.username &&
               this.password === element.password
             ) {
-              this.$router.push("/DashboardPage");
+              this.$router.push({name:"DashboardPage",params:{username: this.username}});
             }
           });
         })

@@ -1,12 +1,12 @@
 
-<template>
-  <v-app>
-    <div class="Register">
+<template >
+  <v-app id= "container">
+    <div class="Register" >
       <v-card class="mx-auto" max-width="400">
         <v-img
           class="white--text align-end"
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+          src="./assets/data-analytics.jpg"
         >
           <v-card-title>Registration form</v-card-title>
         </v-img>
@@ -157,5 +157,15 @@ export default {
 <style>
 .Register {
   justify-content: center;
+  margin-top: 2%;
+  
+  
+  
+  
+}
+#container {
+  background: url("./assets/tech-fibre.jpg");
+  background-size: cover;
+
 }
 </style>
