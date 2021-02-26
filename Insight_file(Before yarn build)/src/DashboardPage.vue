@@ -303,8 +303,9 @@ export default {
       mySeries: [10, 20, 30, 40, 50, 60],
 
       items: [
-        { title: "Home", icon: "mdi-view-dashboard" },
+        { title: "Dashboard", icon: "mdi-view-dashboard" },
         { title: "Input Data", icon: "mdi-forum" },
+        { title: "Logout", icon: "mdi-exit-to-app" },
       ],
 
       graph1: Highcharts,
@@ -344,7 +345,7 @@ export default {
         },
         yAxis: {
           title: {
-            text: "Sales",
+            text: "Number of Sales",
           },
         },
       },
@@ -420,12 +421,11 @@ export default {
       chartOptions3: {
         plotOptions: {
           series: {
-            color: "#3ca388",
+            color: "#318282",
           },
         },
         chart: {
           type: "line",
-          zoomType: "x",
         },
 
         data: {
@@ -444,13 +444,23 @@ export default {
         },
         xAxis: {
           type: "datetime",
-          tickInterval: 24 * 3600 * 1000,
+          // tickInterval: 24 * 3600 * 1000,
         },
         series: [
           {
-            pointRange: 24 * 3600 * 1000,
+            type: "column",
+
+            color: "#42c7aa",
+          },
+          {
+            type: "line",
           },
         ],
+        // series: [
+        //   {
+        //     pointRange: 24 * 3600 * 1000,
+        //   },
+        // ],
         tooltip: {
           crosshairs: true,
           shared: true,
@@ -497,7 +507,6 @@ export default {
         title: {
           text: "Sales prediction",
         },
-        
       },
       graph5: Highcharts,
       chartOptions5: {
@@ -521,6 +530,9 @@ export default {
         title: {
           text: "Transactions per month",
         },
+        credits: {
+          enabled: false,
+        },
       },
     };
   },
@@ -533,6 +545,13 @@ export default {
           params: { username: this.username },
         });
       }
+      if (title == "Logout") {
+        this.$router.push({
+          name: "Home"
+          
+        });
+      }
+      
     },
 
     updateData() {

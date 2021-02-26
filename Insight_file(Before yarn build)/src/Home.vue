@@ -142,7 +142,7 @@ export default {
               this.username === element.username &&
               this.password === element.password
             ) {
-              this.$router.push({name:"DashboardPage",params:{username: this.username}});
+              this.$router.push({name:"InputData",params:{username: this.username}});
             }
           });
         })

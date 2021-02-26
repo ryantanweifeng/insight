@@ -8,7 +8,7 @@
           height="200px"
           src="./assets/data-analytics.jpg"
         >
-          <v-card-title>Registration form</v-card-title>
+          <v-card-title id="registerText">Registration form</v-card-title>
         </v-img>
 
         <v-card-text class="text--primary">
@@ -164,8 +164,11 @@ export default {
   
 }
 #container {
-  background: url("./assets/tech-fibre.jpg");
+  background: url("./assets/computer-analytics.jpg");
   background-size: cover;
 
+}
+#registerText {
+  color: black;
 }
 </style>

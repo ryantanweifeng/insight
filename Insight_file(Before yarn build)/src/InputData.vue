@@ -11,7 +11,7 @@
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title>{{username}}</v-list-item-title>
+                <v-list-item-title>{{ username }}</v-list-item-title>
                 <v-list-item-subtitle>Logged In</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -20,16 +20,20 @@
           <v-list rounded>
             <v-subheader></v-subheader>
             <v-list-item-group
+              
               v-model="selectedItem"
-              color="green"
+              :color="green"
               elevation="24"
             >
               <v-list-item v-for="(item, i) in items" :key="i">
                 <v-list-item-icon>
-                  <v-icon v-text="item.icon" ></v-icon>
+                  <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.title" @click="goToPage(item.title)"></v-list-item-title>
+                  <v-list-item-title
+                    v-text="item.title"
+                    @click="goToPage(item.title)"
+                  ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -73,10 +77,14 @@ export default {
 
   data() {
     return {
+      color: "",
+      data: null,
+      errors: [],
       selectedItem: "",
-       items: [
+      items: [
         { title: "Dashboard", icon: "mdi-view-dashboard" },
         { title: "Input Data", icon: "mdi-forum" },
+        { title: "Logout", icon: "mdi-exit-to-app" },
       ],
     };
   },
@@ -84,14 +92,53 @@ export default {
     InputData,
   },
   methods: {
+    // checkUserInput() {
+    //   axios("backendFinal/prediction.csv")
+    //     .then((response) => {
+    //       if (response == null) {
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     goToPage(title) {
-      if (title == "Dashboard") {
-        this.$router.push({name:"DashboardPage",params:{username:this.username}});
+      axios("backendFinal/prediction.csv")
+        .then((response) => {
+          console.log("this is response value" + response);
+          if (response !== null && title == "Dashboard") {
+            
+            this.$router.push({
+              name: "DashboardPage",
+              params: { username: this.username },
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.color = "";
+          error = this.data;
+          alert("Please enter CSV data to view the dashboard !");
+          if (title == "DashboardPage") {
+            this.$router.push({
+              name: "InputData",
+              params: { username: this.username },
+            });
+          }
+        });
+      // if (title == "Dashboard") {
+      //   this.$router.push({
+      //     name: "DashboardPage",
+      //     params: { username: this.username },
+      //   });
+      // }
+      if (title == "Logout") {
+        this.$router.push({
+          name: "Home",
+        });
       }
     },
     updateData() {
-      
-
       axios
         .get("data.csv")
         .then((response) => {
@@ -116,7 +163,6 @@ export default {
   },
   mounted: function () {
     this.updateData();
-    
   },
 };
 </script>

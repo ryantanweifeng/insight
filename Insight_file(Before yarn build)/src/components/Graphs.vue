@@ -13,12 +13,12 @@
       </div>
 
       <div class="form-group">
-        <label for="exampleFormControlTextarea1"
-          >Please enter data in CSV formate as shown below:</label
+        <label id="header" for="exampleFormControlTextarea1"
+          >Please enter data in CSV format as shown below:</label
         >
-        <p>date,store,profit,sales,transactions</p>
-        <p>2015-01-01,1,114991,90921,483</p>
-        <p>2015-01-01,2,129355,93116,224</p>
+        <p>date,target,profit,sales,transactions</p>
+        <p>2015-01-01,80000,114991,90921,483</p>
+        <p>2015-01-01,90000,129355,93116,224</p>
         <br />
 
         <textarea
@@ -27,7 +27,7 @@
           v-model="csvdata"
           name="csvdata"
           id="csvdata"
-          rows="25"
+          rows="23"
         ></textarea>
       </div>
 
@@ -38,7 +38,7 @@
           v-if="have_results === 'processing'"
           role="status"
         >
-          <span >Loading...</span>
+          <span>Loading...</span>
         </div>
       </button>
     </form>
@@ -64,7 +64,7 @@ import axios from "axios";
 // axios.defaults.baseURL = 'http://localhost:8000';
 require("dotenv").config();
 export default {
-  
+  props: {},
   name: "Graphs",
   data: function () {
     return { errors: [], csvdata: null, have_results: "none", images: null };
@@ -86,7 +86,7 @@ export default {
         var header = csv[0];
         var element_len = header.split(",").length;
         if (element_len !== 5) {
-          this.errors.push("CSV must have 5 columns");
+          this.errors.push("CSV data must have 5 columns only !");
           return;
         }
 
@@ -97,7 +97,9 @@ export default {
           header.split(",")[3] !== "sales" ||
           header.split(",")[4] !== "transactions"
         ) {
-          this.errors.push("CSV  header names are not valid ");
+          this.errors.push(
+            "Please ensure that the labels of the CSV data header are in the correct format ! "
+          );
           return;
         }
 
@@ -130,7 +132,9 @@ export default {
         }
 
         if (csv.length < 50) {
-          this.errors.push("CSV not enough to predict the future sales");
+          this.errors.push(
+            "CSV data not enough to predict the future sales. Enter atleast 3 years data to make accurate prediction"
+          );
           return;
         }
         this.have_results = "processing";
@@ -175,4 +179,11 @@ export default {
   },
 };
 </script>
+
+<style>
+#header {
+  color: black;
+  font-weight: bold;
+}
+</style>
 

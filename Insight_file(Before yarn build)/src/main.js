@@ -7,6 +7,7 @@ import router from './router'
 import HighchartsVue from 'highcharts-vue'
 
 
+
  
 
 require("dotenv").config();
