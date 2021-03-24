@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <form
+    <v-form
       v-if="have_results === 'none' || have_results === 'processing'"
       @submit="checkForm"
     >
@@ -11,37 +11,83 @@
           {{ error }}
         </div>
       </div>
-
-      <div class="form-group">
+      <div>
         <label id="header" for="exampleFormControlTextarea1"
           >Please enter data in CSV format as shown below:</label
         >
-        <p>date,target,profit,sales,transactions</p>
-        <p>2015-01-01,80000,114991,90921,483</p>
-        <p>2015-01-01,90000,129355,93116,224</p>
+        <p>date,target,profit,sales,transactions,item_name,unit_sold</p>
+        <p>2015-01-01,77616,27467,97616,529,frozen meals,55</p>
+        <p>2015-01-01,73116,23565,93116,224,whole milk,95</p>
         <br />
 
-        <textarea
-          class="form-control"
+        <v-file-input
+          label="Choose a file"
+          outlined
+          truncate-length="15"
+          accept=".csv"
+          v-model="chosenFile"
+          @change="loadTextFromFile(e, $event)"
+        ></v-file-input>
+
+        <v-textarea
+          outlined
           :disabled="have_results === 'processing'"
           v-model="csvdata"
           name="csvdata"
           id="csvdata"
           rows="23"
-        ></textarea>
-      </div>
+          shaped
+        ></v-textarea>
 
-      <button type="submit" class="btn btn-primary mb-2">
-        <span v-if="have_results === 'none'">Submit</span>
-        <div
+        <!-- <v-btn
+          large
+          type="submit"
+          style="background-color: #022140; color: white"
+          v-bind="attrs"
+          v-on="on"
+        > -->
+        <!-- <span v-if="have_results === 'none'">Submit</span> -->
+        <!-- <div
           class="spinner-border"
           v-if="have_results === 'processing'"
           role="status"
         >
           <span>Loading...</span>
+        </div> -->
+
+        <div class="text-center">
+          <v-btn
+            v-if="have_results === 'none'"
+            large
+            type="submit"
+            style="background-color: #022140; color: white"
+            :disabled="dialog"
+            :loading="dialog"
+          >
+            Submit
+          </v-btn>
+          <v-dialog
+            v-if="have_results === 'processing'"
+            v-model="dialog"
+            hide-overlay
+            persistent
+            width="300"
+          >
+            <v-card>
+              <v-card-text align="center">Calculating ...</v-card-text>
+              <v-card-text align="center">
+                <v-progress-circular
+                  :size="70"
+                  :width="7"
+                  color="primary"
+                  indeterminate
+                ></v-progress-circular>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
         </div>
-      </button>
-    </form>
+      </div>
+    </v-form>
 
     <div v-if="have_results === 'finished'" class="container">
       <!-- <h1 style="color: Black">Trend of the data</h1> -->
@@ -67,9 +113,27 @@ export default {
   props: {},
   name: "Graphs",
   data: function () {
-    return { errors: [], csvdata: null, have_results: "none", images: null };
+    return {
+      chosenFile: null,
+      text: "",
+      interval: {},
+      value: 0,
+      errors: [],
+      csvdata: null,
+      have_results: "none",
+      images: null,
+      dialog: false,
+    };
   },
   methods: {
+    loadTextFromFile(e, event) {
+      // const file = ev.target.files[0];
+      const reader = new FileReader();
+      reader.readAsText(this.chosenFile);
+      reader.onload = (e) => (this.csvdata = e.target.result);
+
+      console.log(e, event);
+    },
     checkForm: function (e) {
       e.preventDefault();
 
@@ -85,8 +149,8 @@ export default {
 
         var header = csv[0];
         var element_len = header.split(",").length;
-        if (element_len !== 5) {
-          this.errors.push("CSV data must have 5 columns only !");
+        if (element_len !== 7) {
+          this.errors.push("CSV data must have 7 columns only !");
           return;
         }
 
@@ -95,7 +159,9 @@ export default {
           header.split(",")[1] !== "target" ||
           header.split(",")[2] !== "profit" ||
           header.split(",")[3] !== "sales" ||
-          header.split(",")[4] !== "transactions"
+          header.split(",")[4] !== "transactions" ||
+          header.split(",")[5] !== "item_name" ||
+          header.split(",")[6] !== "unit_sold"
         ) {
           this.errors.push(
             "Please ensure that the labels of the CSV data header are in the correct format ! "
@@ -137,6 +203,7 @@ export default {
           );
           return;
         }
+        this.dialog = true;
         this.have_results = "processing";
 
         axios
@@ -146,10 +213,6 @@ export default {
             this.have_results = "finished";
             this.images = results;
             if (this.have_results === "finished") {
-              // this.$router.push({
-              //   name: "DashboardPage",
-              //   params: { results: results },
-              // });
               this.$router.push("/DashboardPage");
             }
 
@@ -176,6 +239,12 @@ export default {
   mounted() {
     console.log("this is new Path of origin : " + process.env.VUE_APP_APIURL);
     console.log("this is new Path of origin : " + process.env.NODE_ENV);
+    this.interval = setInterval(() => {
+      if (this.value === 100) {
+        return (this.value = 0);
+      }
+      this.value += 5;
+    }, 1000);
   },
 };
 </script>

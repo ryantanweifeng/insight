@@ -29,11 +29,10 @@
                   </v-btn>
                 </div>
               </template>
-             
 
               <!--Sign in button with dialog-->
               <template>
-                <v-dialog v-model="dialog" persistent max-width="290">
+                <v-dialog v-model="dialog" persistent max-width="320">
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
                       color="primary"
@@ -45,12 +44,25 @@
                       Sign in
                     </v-btn>
                   </template>
-                  <!-- /* action="/insight/api/verifyUser.php"*/ -->
-                  <!-- method="post" -->
-                  <!-- @submit="checkForm" -->
-                  <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-card>
-                      <v-card-title class="headline"> Sign In </v-card-title>
+
+                  <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
+                    style="margin-bottom: 0; border-radius: 30px"
+                  >
+                    <v-card id="cardContainer">
+                      <div id="headerContainer">
+                        <div style="height: 50px"></div>
+                        <h2 id="headerTitle">
+                          <v-icon large color="white darken-2">
+                            mdi-google-analytics
+                          </v-icon>
+                          INSIGHT
+                        </h2>
+                        <div style="height: 50px"></div>
+                      </div>
+
                       <v-card-text>
                         <v-text-field
                           v-model="username"
@@ -81,26 +93,33 @@
                         >
                         </v-text-field>
                       </v-card-text>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="dialog = false"
-                        >
-                          Cancel
-                        </v-btn>
-                        <!-- <v-btn color="green darken-1" text type="submit">
-                          Sign in
-                        </v-btn> -->
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="verifyUser()"
-                        >
-                          Sign in
-                        </v-btn>
+                      <v-card-actions class="justify-center">
+                        <v-col cols="12">
+                          <div>
+                            <v-btn
+                              block
+                              large
+                              id="signInBtn"
+                              text
+                              @click="verifyUser()"
+                            >
+                              Sign in
+                            </v-btn>
+                          </div>
+                          <div style="height: 15px"></div>
+                          <div>
+                            <v-btn
+                              block
+                              id="cancelBtn"
+                              large
+                              @click="dialog = false"
+                            >
+                              Cancel
+                            </v-btn>
+                          </div>
+                        </v-col>
                       </v-card-actions>
+                      <div style="height: 30px"></div>
                     </v-card>
                   </v-form>
                 </v-dialog>
@@ -123,6 +142,7 @@ export default {
     showPassword: false,
     valid: true,
     dialog: false,
+    dialog2: false,
     users: [],
     username: "",
     password: "",
@@ -131,7 +151,6 @@ export default {
     passwordRules: [(v) => !!v || "Password is required"],
   }),
   methods: {
-    
     verifyUser: function () {
       axios
         .get("api/users.php")
@@ -140,9 +159,20 @@ export default {
           response.data.forEach((element) => {
             if (
               this.username === element.username &&
-              this.password === element.password
+              this.password === element.password &&
+              element.usertype === "sales manager"
             ) {
-              this.$router.push({name:"InputData",params:{username: this.username}});
+              this.$router.push({
+                name: "InputData",
+                params: { username: this.username },
+              });
+            } else {
+              if (
+                this.username === element.username &&
+                this.password === element.password &&
+                element.usertype === "warehouse manager"
+              )
+                this.$router.push("/WarehouseM");
             }
           });
         })
@@ -174,5 +204,36 @@ export default {
       this.$refs.form.validate();
     },
   },
+  mounted: function () {
+    console.log(this.usertype);
+  },
 };
 </script>
+<style>
+#headerContainer {
+  background-color: #022140;
+  border-bottom-left-radius: 200px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#headerTitle {
+  text-align: center;
+  color: white;
+  font-family: Elianto;
+  font-size: 30pt;
+}
+#cardContainer {
+  border-radius: 30px;
+}
+
+/* Dialog buttons for sign in dialog card */
+#signInBtn {
+  background-color: #022140;
+  color: white;
+  width: 40%;
+}
+
+#cancelBtn {
+  width: 40%;
+}
+</style>

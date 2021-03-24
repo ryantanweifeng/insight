@@ -28,9 +28,10 @@ switch ($method) {
         $email = $_POST["email"];
         $username = $_POST["username"];
         $password = $_POST["password"];
+        $usertype = $_POST["usertype"];
         
 
-        $sql = "insert into users (name, email, username, password) values ('$name', '$email', '$username', '$password')";
+        $sql = "insert into users (name, email, username, password, usertype) values ('$name', '$email', '$username', '$password', '$usertype')";
         break;
 }
 

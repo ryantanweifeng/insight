@@ -1,7 +1,7 @@
 
 <template >
-  <v-app id= "container">
-    <div class="Register" >
+  <v-app id="container">
+    <div class="Register">
       <v-card class="mx-auto" max-width="400">
         <v-img
           class="white--text align-end"
@@ -43,6 +43,15 @@
                 required
               ></v-text-field>
 
+              <label>Choose a user type:</label>
+              <v-radio-group mandatory v-model="usertype" column>
+                <v-radio label="Sales manager" value="sales manager"></v-radio>
+                <v-radio
+                  label="Warehouse manager"
+                  value="warehouse manager"
+                ></v-radio>
+              </v-radio-group>
+
               <v-checkbox
                 v-model="checkbox"
                 :rules="[(v) => !!v || 'You must agree to continue!']"
@@ -56,7 +65,6 @@
                 class="mr-4"
                 @click="createContact()"
                 value="Add"
-                href="index.html"
               >
                 Submit
               </v-btn>
@@ -99,7 +107,7 @@ export default {
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
     ],
-
+    usertype: "",
     checkbox: false,
   }),
 
@@ -112,15 +120,18 @@ export default {
     },
 
     createContact: function () {
+      console.log(this.usertype);
+      this.validate();
       if (this.name != "" && this.email != "") {
         console.log("Create user!");
 
         let formData = new FormData();
-        console.log("name:", this.name);
+
         formData.append("name", this.name);
         formData.append("email", this.email);
         formData.append("username", this.username);
         formData.append("password", this.password);
+        formData.append("usertype", this.usertype);
 
         var user = {};
         formData.forEach(function (value, key) {
@@ -148,6 +159,7 @@ export default {
             //handle error
             console.log(response);
           });
+        this.$router.push("/");
       }
     },
   },
@@ -158,15 +170,10 @@ export default {
 .Register {
   justify-content: center;
   margin-top: 2%;
-  
-  
-  
-  
 }
 #container {
   background: url("./assets/computer-analytics.jpg");
   background-size: cover;
-
 }
 #registerText {
   color: black;

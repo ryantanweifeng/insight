@@ -2,17 +2,23 @@
     <template>
   <v-app>
     <div id="div1">
-      <v-card height="100%" elevation="24">
-        <v-navigation-drawer>
+      <v-card height="100%" elevation="24" id="sideBar">
+        <v-navigation-drawer style="background-color: #022140">
           <template v-slot:prepend>
             <v-list-item two-line>
               <v-list-item-avatar>
-                <!-- <img src="https://randomuser.me/api/portraits/women/81.jpg" /> -->
+                <img
+                  src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+                />
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title>{{ username }}</v-list-item-title>
-                <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+                <v-list-item-title style="color: white">{{
+                  username
+                }}</v-list-item-title>
+                <v-list-item-subtitle style="color: white"
+                  >Logged In</v-list-item-subtitle
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -21,14 +27,15 @@
             <v-subheader></v-subheader>
             <v-list-item-group
               v-model="selectedItem"
-              color="green"
+              active-class="#BAB2B5"
+              color="#BAB2B5"
               elevation="24"
             >
               <v-list-item v-for="(item, i) in items" :key="i">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
-                <v-list-item-content>
+                <v-list-item-content style="color: white">
                   <v-list-item-title
                     v-text="item.title"
                     @click="goToPage(item.title)"
@@ -136,11 +143,42 @@
                 <v-card class="card card-chart">
                   <!-- <div class="card-header card-header-danger"> -->
                   <highcharts
-                    :options="chartOptions4"
-                    :highcharts="graph4"
+                    :options="chartOptions2"
+                    :highcharts="graph2"
                   ></highcharts>
 
                   <!-- </div> -->
+                </v-card>
+              </div>
+            </div>
+            <div><h2>Decomposition Graph for Sales</h2></div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions4"
+                    :highcharts="graph4"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions9"
+                    :highcharts="graph9"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions10"
+                    :highcharts="graph10"
+                  ></highcharts>
                 </v-card>
               </div>
             </div>
@@ -151,14 +189,7 @@
                     :options="chartOptions3"
                     :highcharts="graph3"
                   ></highcharts>
-
-                  <!-- <img v-if="images != null" width="100%" :src="images['final_predictions']" alt="img" /> -->
-                  <!-- <v-img :src="images['final_predictions']"></v-img> -->
                 </v-card>
-                <!-- <v-img
-                    src="image"
-                    height="500"
-                  ></v-img> -->
               </div>
             </div>
             <div class="row">
@@ -171,8 +202,55 @@
                 </v-card>
               </div>
             </div>
-            <!-- <div clas="row"></div>
-            <div class="row"></div> -->
+            <div class="row">
+              <div id="charts" class="col-md-6">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions6"
+                    :highcharts="graph6"
+                  ></highcharts>
+                </v-card>
+              </div>
+              <div id="charts" class="col-md-6">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions7"
+                    :highcharts="graph7"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
+            <div><h2>Decomposition Graph for Profits</h2></div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions8"
+                    :highcharts="graph8"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions11"
+                    :highcharts="graph11"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
+            <div class="row">
+              <div id="charts" class="col-md-12">
+                <v-card class="card card-chart" id="graph2">
+                  <highcharts
+                    :options="chartOptions12"
+                    :highcharts="graph12"
+                  ></highcharts>
+                </v-card>
+              </div>
+            </div>
           </template>
         </div>
       </v-main>
@@ -269,11 +347,6 @@ Date,Prediction
 2019-12-01,578048
 
       </pre> -->
-
-      <!-- <pre id="csv1" style="display: none" ref="data1">
-        Categories,Apples,Pears,Oranges,Bananas
-John,8,4,6,5
-      </pre> -->
     </div>
   </v-app>
 </template>
@@ -293,35 +366,29 @@ export default {
   data() {
     return {
       image: "",
-
       errors: [],
       csvdata: null,
       have_results: "none",
       images: null,
       updatedImages: [],
-      selectedItem: "",
+      selectedItem: 1,
       mySeries: [10, 20, 30, 40, 50, 60],
 
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
         { title: "Input Data", icon: "mdi-forum" },
+        { title: "Sales Dashboard", icon: "mdi-view-dashboard" },
+        { title: "Warehouse Dashboard", icon: "mdi-forum" },
         { title: "Logout", icon: "mdi-exit-to-app" },
       ],
 
       graph1: Highcharts,
       chartOptions1: {
         plotOptions: {
-          series: {
-            // marker: {
-            //   enabled: false,
-            // },
-          },
+          series: {},
         },
 
         data: {
           csv: "",
-
-          // enablePolling: true,
         },
 
         credits: {
@@ -330,11 +397,6 @@ export default {
 
         chart: {
           type: "line",
-
-          // backgroundColor: "transparent", //"#62ad53",
-
-          // plotBorderColor: "black",
-          //   selectionMarkerFill: "red",
         },
         title: {
           text: "Yearly Sales Trend",
@@ -349,74 +411,7 @@ export default {
           },
         },
       },
-      graph2: Highcharts,
-      chartOptions2: {
-        plotOptions: {
-          series: {
-            marker: {
-              enabled: false,
-            },
-          },
-        },
-        series: [
-          {
-            lineWidth: 1,
-          },
-          {
-            type: "areaspline",
-            color: "#c4392d",
-            negativeColor: "#5679c4",
-            fillOpacity: 0.5,
-          },
-        ],
-        data: {
-          csv: "",
 
-          //"https://demo-live-data.highcharts.com/vs-load.csv",
-          complete: function (options) {
-            options.series.push({
-              name: "Trend",
-              data: [
-                { x: 1880, y: -0.4 },
-                { x: 2014, y: 0.52 },
-              ],
-            });
-          },
-
-          enablePolling: true,
-
-          //'https://demo-live-data.highcharts.com/vs-load.csv'
-
-          // call back is needed because by default it will be undefined.
-          // complete: function (options) {
-          //   // Add another series to the output
-          //   options.series.push({
-          //     name: "Trend",
-          //     data: [
-          //       { x: 1880, y: -0.4 },
-          //       { x: 2014, y: 0.52 },
-          //     ],
-          //     dashStyle: "dash",
-          //   });
-          // },
-          // csvURL: window.location.origin + "/insight/data.csv",
-        },
-        chart: {
-          type: "spline",
-          // backgroundColor: "transparent", //"#62ad53",
-          //   borderColor: "#273e60",
-          plotBorderColor: "black",
-          //   selectionMarkerFill: "red",
-        },
-        title: {
-          text: "Global temperature change",
-        },
-
-        subtitle: {
-          text:
-            "Data module: options structure is modified before final rendering",
-        },
-      },
       graph3: Highcharts,
       chartOptions3: {
         plotOptions: {
@@ -444,7 +439,6 @@ export default {
         },
         xAxis: {
           type: "datetime",
-          // tickInterval: 24 * 3600 * 1000,
         },
         series: [
           {
@@ -456,19 +450,14 @@ export default {
             type: "line",
           },
         ],
-        // series: [
-        //   {
-        //     pointRange: 24 * 3600 * 1000,
-        //   },
-        // ],
+
         tooltip: {
           crosshairs: true,
           shared: true,
-          // valueSuffix: '°C'
         },
       },
-      graph4: Highcharts,
-      chartOptions4: {
+      graph2: Highcharts,
+      chartOptions2: {
         plotOptions: {
           series: {
             color: "#ffa500",
@@ -534,53 +523,211 @@ export default {
           enabled: false,
         },
       },
+      graph6: Highcharts,
+      chartOptions6: {
+        plotOptions: {
+          series: {
+            color: "#ed8f79",
+          },
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        title: {
+          text: "Profits per month",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+      graph7: Highcharts,
+      chartOptions7: {
+        plotOptions: {
+          series: {
+            color: "#b0264b",
+          },
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        title: {
+          text: "Prediction of profits",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+
+      //  salesTrendDec
+
+      graph4: Highcharts,
+      chartOptions4: {
+        plotOptions: {
+          series: {
+            color: "#4D6D9A",
+          },
+        },
+        title: {
+          text: "Sales - Trend",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+      // salesSeasonalDec
+
+      graph9: Highcharts,
+      chartOptions9: {
+        plotOptions: {
+          series: {
+            color: "#86B3D1",
+          },
+        },
+        title: {
+          text: "Sales - Seasonal",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+      // salesResDec
+      graph10: Highcharts,
+      chartOptions10: {
+        plotOptions: {
+          series: {
+            color: "#86B3D1",
+          },
+        },
+        title: {
+          text: "Sales - Residual",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+
+      //Profit-Trend
+
+      graph8: Highcharts,
+      chartOptions8: {
+        plotOptions: {
+          series: {
+            color: "#644E5B",
+          },
+        },
+        title: {
+          text: "Profit-Trend",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+      // Profit- Seasonal
+
+      graph11: Highcharts,
+      chartOptions11: {
+        plotOptions: {
+          series: {
+            color: "#9E5A63",
+          },
+        },
+        title: {
+          text: "Profit- Seasonal",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
+      // Profit- Residual
+
+      graph12: Highcharts,
+      chartOptions12: {
+        plotOptions: {
+          series: {
+            color: "#C96567",
+          },
+        },
+        title: {
+          text: "Profit- Residual",
+        },
+        chart: {
+          type: "line",
+        },
+        data: {
+          csv: "",
+        },
+        credits: {
+          enabled: false,
+        },
+      },
     };
   },
 
   methods: {
     goToPage(title) {
       if (title == "Input Data") {
+        this.selectedItem = true;
         this.$router.push({
           name: "InputData",
           params: { username: this.username },
         });
       }
-      if (title == "Logout") {
+      if (title == "Warehouse Dashboard") {
         this.$router.push({
-          name: "Home"
-          
+          name: "WarehouseM",
+          params: { username: this.username },
         });
       }
-      
+      if (title == "Logout") {
+        this.$router.push({
+          name: "Home",
+        });
+      }
     },
 
     updateData() {
-      // this.images = this.results;
-      // this.chartOptions1.series[0].data = this.mySeries;
+      //csURL does not work
 
-      // this.chartOptions4.series[0].data.csv = this.$refs.dataC.innerHTML;
-
-      // this.chartOptions4.data.csv = this.$refs.dataC.innerHTML;
-      // this.chartOptions4.series[1].data.csv = this.$refs.dataD.innerHTML;
-      // console.log(this.chartOptions4.series[0].data.csv);
-      // console.log(this.chartOptions4.series[1].data.csv);
-      // this.chartOptions2.data.csvURL =
-      //   "http://localhost:8080/insight/#/data.csv";
-
-      // axios
-      //   .get("data.csv")
-      //   .then((response) => {
-      //     this.chartOptions1.data.csv = response.data;
-      //     // console.log( "this is data.csv ==== "+response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
       axios
         .get("backendFinal/prediction.csv")
         .then((response) => {
-          this.chartOptions4.data.csv = response.data;
-          console.log(response);
+          this.chartOptions2.data.csv = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -615,14 +762,88 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      axios
+        .get("backendFinal/profit.csv")
+        .then((response) => {
+          this.chartOptions6.data.csv = response.data;
+
+          let newData = response.data.split("/n");
+          newData.splice(0, 1);
+          newData.forEach((element) => {
+            console.log("graph 8 data: " + element);
+          });
+
+          console.log(
+            "This is graph 8 data: " + this.chartOptions8.series[0].data
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/profitPrediction.csv")
+        .then((response) => {
+          this.chartOptions7.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      axios
+        .get("backendFinal/salesTrendDec.csv")
+        .then((response) => {
+          this.chartOptions4.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/salesSeasonalDec.csv")
+        .then((response) => {
+          this.chartOptions9.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/salesResDec.csv")
+        .then((response) => {
+          this.chartOptions10.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/profitTrendDec.csv")
+        .then((response) => {
+          this.chartOptions8.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/profitSeasonalDec.csv")
+        .then((response) => {
+          this.chartOptions11.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      axios
+        .get("backendFinal/profitResDec.csv")
+        .then((response) => {
+          this.chartOptions12.data.csv = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       // this.chartOptions3.data.csv = this.$refs.data1.innerHTML; // This is based on input data of csv data but not from csv file
     },
   },
   mounted: function () {
     this.updateData();
-    // if (this.results != this.images) {
-    //   this.images = this.results;
-    // }
   },
 };
 </script>
@@ -633,6 +854,10 @@ export default {
   width: 20%;
   position: fixed;
   left: 0;
+  background-color: #022140;
+}
+#sideBar {
+  background-color: #022140;
 }
 
 #div2 {

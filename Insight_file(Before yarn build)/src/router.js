@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Register from '@/Register'; 
 import Home from './Home.vue'; 
 
 
@@ -37,6 +36,13 @@ export default new Router({
         name: 'InputData',
         component: () =>
         import('./InputData.vue'),
+        props: true
+      },
+      {
+        path: '/WarehouseM',
+        name: 'WarehouseM',
+        component: () =>
+        import('./WarehouseM.vue'),
         props: true
       }
       
