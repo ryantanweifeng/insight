@@ -299,8 +299,6 @@ export default {
       axios
         .get("backendFinal/warhouseStockListPerYear.csv")
         .then((response) => {
-          // this.chartOptions3.data.csv = response.data;
-
           // break the textblock into an array of lines
           var lines = response.data.split("\n");
           // remove one line, starting at the first position

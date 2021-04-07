@@ -153,19 +153,46 @@ export default {
           this.errors.push("CSV data must have 7 columns only !");
           return;
         }
+        
 
-        if (
-          header.split(",")[0] !== "date" ||
-          header.split(",")[1] !== "target" ||
-          header.split(",")[2] !== "profit" ||
-          header.split(",")[3] !== "sales" ||
-          header.split(",")[4] !== "transactions" ||
-          header.split(",")[5] !== "item_name" ||
-          header.split(",")[6] !== "unit_sold"
-        ) {
+        if(
+          header.split(',')[0]!=='date' || 
+          header.split(',')[1]!=='target' ||
+          header.split(',')[2]!=='profit' || 
+          header.split(',')[3]!=='sales' || 
+          header.split(',')[4]!=='transactions' || 
+          header.split(',')[5]!=='item_name' || 
+          header.split(',')[6].includes('unit_sold') 
+) {
           this.errors.push(
             "Please ensure that the labels of the CSV data header are in the correct format ! "
           );
+          if (header.split(",")[0] == "date") {
+            console.log(header.split(",")[0]);
+          }
+          if (header.split(",")[1] == "target") {
+            console.log(header.split(",")[1]);
+          }
+          if (header.split(",")[2] == "profit") {
+            console.log(header.split(",")[2]);
+          }
+          if (header.split(",")[3] == "sales") {
+            console.log(header.split(",")[3]);
+          }
+          if (header.split(",")[4] == "transactions") {
+            console.log(header.split(",")[4]);
+          }
+          if (header.split(",")[5] == "item_name") {
+            console.log(header.split(",")[5]);
+          }
+          if (header.split(",")[6] == "unit_sold") {
+            console.log(header.split(",")[6]);
+          }
+          console.log(header.split(",")[6] == "unit_sold");
+          console.log(header.split(",")[6]);
+          console.log(typeof header.split(",")[6]);
+          console.log(typeof "unit_sold");
+
           return;
         }
 
@@ -213,7 +240,10 @@ export default {
             this.have_results = "finished";
             this.images = results;
             if (this.have_results === "finished") {
-              this.$router.push("/DashboardPage");
+              this.$router.push({
+                name: "DashboardPage",
+                params: { username: this.username },
+              });
             }
 
             console.log(window.location.href);

@@ -44,6 +44,13 @@ export default new Router({
         component: () =>
         import('./WarehouseM.vue'),
         props: true
+      },
+      {
+        path: '/HomePage',
+        name: 'HomePage',
+        component: () =>
+        import('./HomePage.vue'),
+        props: true
       }
       
 

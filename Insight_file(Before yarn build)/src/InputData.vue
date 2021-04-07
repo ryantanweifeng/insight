@@ -147,16 +147,6 @@ export default {
       }
     },
     updateData() {
-      axios
-        .get("data.csv")
-        .then((response) => {
-          this.chartOptions2.data.csv = response.data;
-          // console.log( "this is data.csv ==== "+response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
       // this.chartOptions3.data.csv = this.$refs.data1.innerHTML; // This is based on input data of csv data but not from csv file
     },
   },
