@@ -162,36 +162,16 @@ export default {
           header.split(',')[3]!=='sales' || 
           header.split(',')[4]!=='transactions' || 
           header.split(',')[5]!=='item_name' || 
-          header.split(',')[6].includes('unit_sold') 
+          header.split(',')[6].trim() !=='unit_sold'
+          // header.split(',')[6].includes('unit_sold') == false ||
+          // header.split(',')[6].trim().endsWith("sold") == false
+
 ) {
           this.errors.push(
             "Please ensure that the labels of the CSV data header are in the correct format ! "
           );
-          if (header.split(",")[0] == "date") {
-            console.log(header.split(",")[0]);
-          }
-          if (header.split(",")[1] == "target") {
-            console.log(header.split(",")[1]);
-          }
-          if (header.split(",")[2] == "profit") {
-            console.log(header.split(",")[2]);
-          }
-          if (header.split(",")[3] == "sales") {
-            console.log(header.split(",")[3]);
-          }
-          if (header.split(",")[4] == "transactions") {
-            console.log(header.split(",")[4]);
-          }
-          if (header.split(",")[5] == "item_name") {
-            console.log(header.split(",")[5]);
-          }
-          if (header.split(",")[6] == "unit_sold") {
-            console.log(header.split(",")[6]);
-          }
-          console.log(header.split(",")[6] == "unit_sold");
-          console.log(header.split(",")[6]);
-          console.log(typeof header.split(",")[6]);
-          console.log(typeof "unit_sold");
+          
+         
 
           return;
         }
@@ -201,7 +181,7 @@ export default {
 
         try {
           csv.forEach((element) => {
-            if (element.split(",").length !== element_len) {
+            if (element.split(",").length !== element_len || element.split(",") === "") {
               this.errors.push(
                 'CSV data not valid. There might be a missing "," or a value'
               );

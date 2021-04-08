@@ -272,7 +272,7 @@ export default {
       }
       if (title == "Logout") {
         this.$router.push({
-          name: "Home",
+          name: "HomePage",
         });
       }
     },

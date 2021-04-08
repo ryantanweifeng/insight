@@ -73,7 +73,7 @@
                 color="error"
                 class="mr-4"
                 @click="reset"
-                href="index.html"
+                
               >
                 Cancel
               </v-btn>
@@ -117,6 +117,7 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
+      this.$router.push("/");
     },
 
     createContact: function () {
