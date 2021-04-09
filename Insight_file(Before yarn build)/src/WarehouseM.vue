@@ -114,10 +114,11 @@ export default {
       csvdata: null,
       have_results: "none",
 
-      selectedItem: 1,
+      selectedItem: 2,
       mySeries: [10, 20, 30, 40, 50, 60],
 
       items: [
+        { title: "Input Data", icon: "mdi-forum" },
         { title: "Sales Dashboard", icon: "mdi-view-dashboard" },
         { title: "Warehouse Dashboard", icon: "mdi-forum" },
         { title: "Logout", icon: "mdi-exit-to-app" },
@@ -277,6 +278,13 @@ export default {
           params: { username: this.username },
         });
       }
+      if(title == "Input Data"){
+        this.$router.push({
+          name: "InputData",
+          params: { username: this.username },
+        });
+      }
+
       if (title == "Logout") {
         this.$router.push({
           name: "HomePage",
